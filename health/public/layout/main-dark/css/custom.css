@@ -1,0 +1,14 @@
+.content .box .nav a.active {
+    color: #fff !important;
+    background-color: #2d41cd;
+}
+
+.color-h {
+    color: #0c1a32 !important;
+    margin-top: 20px;
+}
+
+.row-style{
+    margin-left: auto;
+    margin-right: auto;
+}
