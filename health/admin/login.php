@@ -75,19 +75,8 @@
                                     <!-- /.col -->
                                 </div>
                             </form>
-                            <!-- <div class="text-center">
-                                <p class="mt-15 mb-0">Không có tài khoản? <a href="auth_register.php" class="text-warning ms-5">Sign Up</a></p>
-                            </div> -->
                         </div>
-                    </div>
-                    <!-- <div class="text-center">
-                        <p class="mt-20 text-white">- Sign up With -</p>
-                        <p class="gap-items-2 mb-20">
-                            <a class="btn btn-social-icon btn-round btn-facebook" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-social-icon btn-round btn-twitter" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-social-icon btn-round btn-instagram" href="#"><i class="fab fa-instagram"></i></a>
-                        </p>
-                    </div> -->
+                    </div>               
                 </div>
             </div>
         </div>
@@ -101,6 +90,4 @@
 <script src="public/layout/assets/icons/feather-icons/feather.min.js"></script>
 
 </body>
-
-<!-- Mirrored from rhythm-admin-template.multipurposethemes.com/main-dark/auth_login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Mar 2022 10:31:04 GMT -->
 </html>

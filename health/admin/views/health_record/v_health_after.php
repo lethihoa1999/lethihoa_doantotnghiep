@@ -58,7 +58,7 @@
                             <h3 class="box-title">Quản lý hồ sơ sức khỏe sau tiêm</h3>
                         </div>
                         <div class="col-lg-6 col-12 d-flex align-items-sm-center">
-                        <button type="submit" name="btnsearch" class="btn me-1 mt-sm-2" style="background-color: red; margin-left: 1.9%;" onclick="window.location.href='add_health.php?luot_tiem=2'"></i>Thêm</button>
+                        <button type="submit" name="btnsearch" class="btn me-1 mt-sm-2" style="background-color: red; margin-left: 1.9%; width: 16%;" onclick="window.location.href='add_health.php?luot_tiem=2'"></i>Thêm</button>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

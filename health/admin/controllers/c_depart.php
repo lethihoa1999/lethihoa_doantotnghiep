@@ -61,36 +61,6 @@ class c_depart {
         include ("templates/font-end/layout.php");
     }
 
-    public function manage_package_vacxin()
-    {
-        $m_manage_package_vacxin = new m_health_record();
-            if (isset($_POST['btnsearch'])) {
-                $ho_ten = $_POST['ho_ten'];
-                $ngay_kham = $_POST['ngay_kham'];
-                $manage_package_vacxin = $m_manage_package_vacxin->search_health_record_customer($ho_ten,$ngay_kham);
-            } else {
-                $manage_package_vacxin = $m_manage_package_vacxin->read_health_record_with_name_customer();
-            }
-
-        $view = "views/manage_depart/v_manage_package_vacxin.php";
-        include("templates/font-end/layout.php");
-    }
-
-    public function manage_news()
-    {
-        $m_manage_news = new m_health_record();
-            if (isset($_POST['btnsearch'])) {
-                $ho_ten = $_POST['ho_ten'];
-                $ngay_kham = $_POST['ngay_kham'];
-                $manage_news = $m_manage_news->search_health_record_customer($ho_ten,$ngay_kham);
-            } else {
-                $manage_news = $m_manage_news->read_health_record_with_name_customer();
-            }
-
-        $view = "views/manage_depart/v_manage_news.php";
-        include("templates/font-end/layout.php");
-    }
-
     public function manage_vacxin()
     {
         $m_manage_vacxin = new m_depart();
@@ -182,6 +152,90 @@ class c_depart {
             }
         }
     }
+
+    public function manage_package_vacxin()
+    {
+        $m_manage_package_vacxin = new m_health_record();
+            if (isset($_POST['btnsearch'])) {
+                $ho_ten = $_POST['ho_ten'];
+                $ngay_kham = $_POST['ngay_kham'];
+                $manage_package_vacxin = $m_manage_package_vacxin->search_health_record_customer($ho_ten,$ngay_kham);
+            } else {
+                $manage_package_vacxin = $m_manage_package_vacxin->read_health_record_with_name_customer();
+            }
+
+        $view = "views/manage_depart/v_manage_package_vacxin.php";
+        include("templates/font-end/layout.php");
+    }
+
+    public function manage_news()
+    {
+        // $m_manage_news = new m_health_record();
+        //     if (isset($_POST['btnsearch'])) {
+        //         $ho_ten = $_POST['ho_ten'];
+        //         $ngay_kham = $_POST['ngay_kham'];
+        //         $manage_news = $m_manage_news->search_health_record_customer($ho_ten,$ngay_kham);
+        //     } else {
+        //         $manage_news = $m_manage_news->read_health_record_with_name_customer();
+        //     }
+
+        $m_manage_news = new m_depart();       
+        $manage_news  = $m_manage_news->read_news();
+
+        $view = "views/manage_depart/v_manage_news.php";
+        include("templates/font-end/layout.php");
+    }
+
+    public function edit_news() {      
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $m_manage_news = new m_depart();
+            if(isset($_POST['btnsubmit']))
+            {
+                $tieu_de = $_POST['tieu_de'];
+                $noi_dung = $_POST['noi_dung'];
+                $anh = $_POST['anh'];
+                $nguoi_dang = $_POST['nguoi_dang'];
+                $thoi_gian_dang = $_POST['thoi_gian_dang'];
+                $result = $m_manage_news->edit_news($tieu_de,$noi_dung,$anh,$nguoi_dang,$thoi_gian_dang,$id);
+            }
+             
+        $read_new = $m_manage_news->read_news_by_id($id);
+    }
+        $view = "views/manage_depart/v_edit_news.php";
+        include ("templates/font-end/layout.php");
+    }
+
+    public function add_news() {      
+            $m_manage_news = new m_depart();
+            $manage_vacxin = $m_manage_news->read_vacxin(); 
+            if(isset($_POST['btnsubmit']))
+            {
+                $tieu_de = $_POST['tieu_de'];
+                $anh = $_POST['anh'];
+                $nguoi_dang = $_POST['nguoi_dang'];
+                $thoi_gian_dang = $_POST['thoi_gian_dang'];
+                $result = $m_manage_news->add_news(null,$tieu_de,null,$anh,$nguoi_dang,$thoi_gian_dang,1);
+            }
+    
+        $view = "views/manage_depart/v_add_news.php";
+        include ("templates/font-end/layout.php");
+    }
+
+    function delete_news()
+    {
+        if(isset($_GET["id"]))
+        {
+            $id= $_GET["id"];
+            $m_news = new m_depart();
+            $kq = $m_news->delete_news($id);
+            if($kq)
+            {
+                echo "<script>alert('Xóa thành công');window.location='manage_news.php'</script>";
+            }
+        }
+    }
+
 
 
 }

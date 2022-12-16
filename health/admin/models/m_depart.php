@@ -137,21 +137,37 @@ class m_depart extends database {
         return $this->execute(array($id_vacxin));
     }
 
-    // public function delete_vacxin_id_co_so($id_co_so_tiem) {
-    //     $sql = "delete from co_so_tiem_chung where id_co_so_tiem = ?";
-    //     $this->setQuery($sql);
-    //     return $this->execute(array($id_co_so_tiem));
-    // }
+    public function read_news()
+    {
+        $sql = "select * from benh_hoc";
+        $this->setQuery($sql);
+        return $this->loadAllRows();
+    }
+
+    public function read_news_by_id($id) {
+        $sql = "select * from benh_hoc where id = ?";+
+        $this->setQuery($sql);
+        return $this->loadRow(array($id));
+    }
 
     
+    public function edit_news($tieu_de,$noi_dung,$anh,$nguoi_dang,$thoi_gian_dang,$id) {
+        $sql = "update benh_hoc set tieu_de = ?,noi_dung = ?,anh = ?,nguoi_dang = ?,thoi_gian_dang = ? where id = ?";
+        $this->setQuery($sql);
+        return $this->execute(array($tieu_de,$noi_dung,$anh,$nguoi_dang,$thoi_gian_dang,$id));
+    }
 
+    public function add_news($id,$tieu_de,$noi_dung,$anh,$nguoi_dang,$thoi_gian_dang,$trang_thai) {
+        $sql = "insert into benh_hoc values(?,?,?,?,?,?,?)";
+        $this->setQuery($sql);
+        return $this->execute(array($id,$tieu_de,$noi_dung,$anh,$nguoi_dang,$thoi_gian_dang,$trang_thai));
+    }
 
-    // public function search_vacxin_facility($ten_vacxin,$nuoc_san_xuat) {
-    //     $sql = "select * from vacxin where ten_vacxin LIKE '%$ten_vacxin%' AND nuoc_san_xuat LIKE '%$nuoc_san_xuat%'";
-    //     $this->setQuery($sql);
-    //     return $this->loadAllRows();
-    // }
-    
+    public function delete_news($id) {
+        $sql = "delete from benh_hoc where id = ?";
+        $this->setQuery($sql);
+        return $this->execute(array($id));
+    }
 
 }
 ?>

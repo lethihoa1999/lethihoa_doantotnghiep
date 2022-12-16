@@ -73,21 +73,7 @@ class c_update_information_user {
     //     include_once ("templates/font-end/layout.php");
     // }
 
-    public function home() {
-        $m_information_user = new m_information_user();
-        $information_user = $m_information_user->read_user();
-        if (isset($_SESSION['email'])) {
-            $id = $_SESSION['email'];
-            $id_user = $_SESSION['id'];
-            $move = $m_information_user->log_move($id_user);
-            $read_email = $m_information_user->read_email_user($id);
-        }
-
-        $view = "views/home/v_home.php";
-        include_once ("templates/font-end/layout.php");
-    }
-
-    // public function ceftidication() {
+        // public function ceftidication() {
     //     $m_information_user = new m_information_user();
     //     $information_user = $m_information_user->read_user();
     //     if (isset($_SESSION['email'])) {
@@ -100,6 +86,15 @@ class c_update_information_user {
     //     $view = "views/ceftidication-covid/v_ceftidication_covid.php";
     //     include_once ("templates/font-end/layout.php");
     // }
+
+    public function home() {
+        $m_information_user = new m_information_user();
+        $show_vacxin = $m_information_user->show_vacxin();
+        $show_illness = $m_information_user->show_illnes();
+
+        $view = "views/home/v_home.php";
+        include_once ("templates/font-end/layout.php");
+    }
 
     public function introduce() {
         $m_information_user = new m_information_user();
@@ -131,15 +126,31 @@ class c_update_information_user {
 
     public function illnes() {
         $m_information_user = new m_information_user();
-        $information_user = $m_information_user->read_user();
-        if (isset($_SESSION['email'])) {
-            $id = $_SESSION['email'];
-            $id_user = $_SESSION['id'];
-            $move = $m_information_user->log_move($id_user);
-            $read_email = $m_information_user->read_email_user($id);
-        }
+        $illnes = $m_information_user->illnes();
 
         $view = "views/illnesses/v_illnes.php";
+        include_once ("templates/font-end/layout.php");
+    }
+
+    public function illnes_detail() {
+        $m_information_user = new m_information_user();
+        $information_user = $m_information_user->read_user();
+        if (isset($_GET['id'])) {
+            $id = $_GET['id']; 
+        }
+
+        $view = "views/illnesses/v_illnes_detail.php";
+        include_once ("templates/font-end/layout.php");
+    }
+
+    public function vacxin_detail() {
+        $m_vacxin_detail = new m_information_user();
+        if (isset($_GET['id'])) {
+            $id = $_GET['id']; 
+      
+        }
+
+        $view = "views/home/v_vacxin_detail.php";
         include_once ("templates/font-end/layout.php");
     }
 

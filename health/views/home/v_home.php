@@ -33,39 +33,11 @@
                 <h3 class="color-h">DANH MỤC VACXIN</h3>
                 <hr  width="100%" style="margin: 0 auto; " />
                 <div class="row" style="text-align: center;">
+                <?php foreach ($show_vacxin as $key=>$value) { ?>
                     <div class="col-3">
-                        <img src="public/layout/images/anhdoan/loaivacxin/Imojev-boom.png" >
-                        <span>Infanrix Hexa – Vắc xin 6 trong 1 của Bỉ</span>
+                        <a href="vacxin_detail.php?id=<?php echo $value->id; ?>"><img src="public/layout/images/anhdoan/loaivacxin/<?php echo $value->anh; ?>" class="img-illnes"></a>
                     </div>
-                    <div class="col-3">
-                        <img src="public/layout/images/anhdoan/loaivacxin/boostrix.jpg" >
-                        <span>Vắc xin BOOSTRIX (Bỉ) phòng Ho gà – Bạch hầu – Uốn ván</span>
-                    </div>
-                    <div class="col-3">
-                        <img src="public/layout/images/anhdoan/loaivacxin/infanrix-hexa.jpg" >
-                        <span>Vắc xin IMOJEV – Vắc xin phòng viêm não Nhật Bản thế hệ mới</span>
-                    </div>
-                    <div class="col-3">
-                        <img src="public/layout/images/anhdoan/loaivacxin/MMR-II.jpg" >
-                        <span>Vắc xin MMR II (Mỹ) phòng bệnh Sởi – quai bị – rubella</span>
-                    </div>
-
-                    <div class="col-3">
-                        <img src="public/layout/images/anhdoan/loaivacxin/prevenar.jpg" >
-                        <span >Vắc xin phế cầu PREVENAR 13 – Phòng các bệnh do phế cầu khuẩn</span>
-                    </div>
-                    <div class="col-3">
-                        <img src="public/layout/images/anhdoan/loaivacxin/SYNFLORIX.jpg" >
-                        <span>Vắc xin SYNFLORIX (Bỉ) phòng các bệnh do phế cầu khuẩn</span>
-                    </div>
-                    <div class="col-3">
-                        <img src="public/layout/images/anhdoan/loaivacxin/vacxin-MVVac.jpg" >
-                        <span>Vắc xin sởi MVVac</span>
-                    </div>
-                    <div class="col-3">
-                        <img src="public/layout/images/anhdoan/loaivacxin/vaxigrip-tetra.jpg" >
-                        <span>Vắc xin Tứ giá Vaxigrip Tetra phòng bệnh Cúm mùa</span>
-                    </div>
+                <?php } ?>
                 </div>
             </div>
             <div class="col-12">
@@ -93,16 +65,12 @@
             <div class="col-12">
                 <h3 class="color-h">BỆNH HỌC</h3>
                 <hr  width="100%" style="margin: 0 auto; " />
-                <div class="row" style="text-align: center;">
+                <div class="row" style="text-align: center;">              
+                <?php foreach ($show_illness as $key=>$value) { ?>
                     <div class="col-4">
-                        <img src="public/layout/images/anhdoan/benhhoc/chua-cum-tai-nha-768x402.jpg" class="image-home">
+                        <a href="illnes_detail.php?id=<?php echo $value->id; ?>"><img src="public/layout/images/anhdoan/benhhoc/<?php echo $value->anh; ?>" class="img-illnes"></a>
                     </div>
-                    <div class="col-4">
-                        <img src="public/layout/images/anhdoan/benhhoc/tiem-phong-cum-truoc-khi-mang-thai-768x402.jpg" class="image-home">
-                    </div>
-                    <div class="col-4">
-                        <img src="public/layout/images/anhdoan/benhhoc/virus-cum-768x402.jpg" class="image-home">
-                    </div>
+                <?php } ?>
                 </div>
             </div>
         

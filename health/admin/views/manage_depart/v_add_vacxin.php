@@ -38,7 +38,7 @@
                                 </div>                              
                             </div>
                             <div style="margin-top: 3%; margin-left: 5%; ">
-                                <button class="btn btn-success" type="submit" name="btnsubmit">Sửa</button>
+                                <button class="btn btn-success" type="submit" name="btnsubmit">Thêm vacxin</button>
                                 <a class="btn btn-danger" href='manage_vacxin.php?id=<?php echo $_SESSION['id_cs']; ?>'>Quay lại</a>
                             </div>
                         </form>

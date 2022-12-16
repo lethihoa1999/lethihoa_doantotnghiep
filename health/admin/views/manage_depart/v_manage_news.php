@@ -44,39 +44,36 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">Quản lý tin tức bệnh học</h3>
                         </div>
-
+                        <div class="col-lg-6 col-12 d-flex align-items-sm-center">
+                            <button type="submit" name="btnsearch" class="btn me-1 mt-sm-2" style="background-color: #ffa800; margin-left: 1.9%;" onclick="window.location.href='add_news.php'"></i>Thêm tin tức</button>
+                        </div>
                         <!-- /.box-header -->
                         <div class="box-body">
+
+                        
                             <div class="table-responsive">
                                 <table cellspacing="0" cellpadding="5" id="example" class="table table-bordered table-striped" style="background-color: white;">
                                     <thead>
                                     <tr>
                                         <th>Tiêu đề</th>
-                                        <th>Nội dung</th>
+                                        <!-- <th>Nội dung</th> -->
                                         <th>Hình ảnh</th>
+                                        <th>Người đăng</th>
+                                        <th>Thời gian đăng</th>
                                         <th>Hành động</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <?php foreach ($manage_news as $key=>$value) { ?>
                                         <tr>
-                                            <td><?php echo $value->ho_ten;?></td>
-                                            <!-- <td><?php echo $value->huyet_ap;?></td>
-                                            <td><?php echo $value->nhip_tim;?></td>
-                                            <td><?php echo $value->nhiet_do;?></td>
-                                            <td><?php echo $value->chieu_cao;?></td>
-                                            <td><?php echo $value->can_nang;?></td>
-                                            <td><?php echo $value->nhom_mau;?></td> -->
-                                            <td><?php echo $value->thong_tin_benh;?></td>
-                                            <td><?php
-                                                if ($value->ngay_kham == NULL) {
-                                                    echo "Chưa cập nhật";
-                                                } else {
-                                                    echo date("d-m-Y", strtotime($value->ngay_kham));
-                                                }
-                                            ?></td>
-                                            <!--                                        <td><button type="button" class="waves-effect waves-circle btn btn-circle btn-success btn-xm mb-5"><i class="fad fa-eye"></i></button></td>-->
-                                            <td><a href="edit_health_record.php?id=<?php echo $value->id;?>" class="waves-effect waves-circle btn btn-circle btn-success btn-xm mb-5"><i class="fad fa-pencil"></i></a></td>
+                                            <td><?php echo $value->tieu_de;?></td>
+                                            <!-- <td><?php echo $value->noi_dung;?></td> -->
+                                            <td><?php echo $value->anh;?></td>
+                                            <td><?php echo $value->nguoi_dang;?></td>
+                                            <td><?php $thoi_gian_dang=$value->thoi_gian_dang; echo date("d-m-Y", strtotime($thoi_gian_dang)); ?></td>  
+
+                                            <td style="text-align: center; width: 15%;"><button type="button" class="btn btn-cyan btn-sm" onclick="window.location.href='edit_news.php?id=<?php echo $value->id;?>'">Edit</button>
+                                            <button type="button" name="delete" class="btn btn-danger btn-sm" style="" onclick="window.location.href='delete_news.php?id=<?php echo $value->id;?>' ">Delete</button></td>
                                         </tr>
                                     <?php } ?>
                                     </tbody>

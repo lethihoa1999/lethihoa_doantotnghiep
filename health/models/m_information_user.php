@@ -20,12 +20,6 @@ class m_information_user extends database {
         return $this->execute(array($ho_ten,$gioi_tinh,$ngay_sinh,$so_dien_thoai_lien_lac,$dia_chi));
     }
 
-    public function load_ceftidication($id_khach_hang) {
-        $sql = "select * from dang_ky_tiem dk,cau_hoi_dang_ky_tiem ch where dk.id_khach_hang=ch.id_dang_ky_tiem and dk.thoi_gian_mong_muon_tiem=ch.ngay_tao and dk.trang_thai_tiem=1 and dk.id_khach_hang = ? ORDER BY dk.ngay_tiem DESC";
-        $this->setQuery($sql);
-        return $this->loadAllRows(array($id_khach_hang));
-    }
-
     public function id_ceftidication($id_khach_hang) {
         $sql = "select * from dang_ky_tiem where id_khach_hang = ?";
         $this->setQuery($sql);
@@ -44,45 +38,42 @@ class m_information_user extends database {
         return $this->loadRow(array($id_khach_hang));
     }
 
-    public function read_province() {
-        $sql = "select * from tinh_thanh_pho";
-        $this->setQuery($sql);
-        return $this->loadAllRows();
-    }
-
-    public function show_province($id) {
-        $sql = "select ten_tinh_thanh_pho from tinh_thanh_pho where id = ?";
-        $this->setQuery($sql);
-        return $this->loadAllRows(array($id));
-    }
-
-    public function read_dictricts($id_tinh_thanh_pho) {
-        $sql = "select * from quan_huyen where id_tinh_thanh_pho = ?";
-        $this->setQuery($sql);
-        return $this->loadAllRows(array($id_tinh_thanh_pho));
-    }
-
-    public function show_dictricts($id) {
-        $sql = "select ten_quan_huyen from quan_huyen where id = ?";
-        $this->setQuery($sql);
-        return $this->loadAllRows(array($id));
-    }
-
-    public function read_wards($id_quan_huyen) {
-        $sql = "select * from xa_phuong where id_quan_huyen = ?";
-        $this->setQuery($sql);
-        return $this->loadAllRows(array($id_quan_huyen));
-    }
-
-    public function show_wards($id) {
-        $sql = "select ten_xa_phuong from xa_phuong where id = ?";
-        $this->setQuery($sql);
-        return $this->loadAllRows(array($id));
-    }
-
     public function log_move($id_khach_hang) {
         $sql = "select * from log_khai_bao_y_te where id_khach_hang = ? ORDER BY ngay_khoi_hanh DESC;";
         $this->setQuery($sql);
         return $this->loadAllRows(array($id_khach_hang));
     }
+
+    public function show_illnes(){        
+        // $sql = " SELECT * FROM benh_hoc WHERE id ORDER BY id DESC LIMIT 3";
+        $sql = " SELECT * FROM benh_hoc WHERE id ORDER BY id ASC LIMIT 3";
+        $this->setQuery($sql);
+        return $this->loadAllRows();
+    }
+
+    public function illnes() {
+        $sql = "select * from benh_hoc";
+        $this->setQuery($sql);
+        return $this->loadAllRows();
+    }
+
+    public function illnes_detail($id) {
+        $sql = "select * from benh_hoc where id= ?";
+        $this->setQuery($sql);
+        return $this->loadRow(array($id));
+    }
+
+    public function show_vacxin(){        
+        // $sql = " SELECT * FROM benh_hoc WHERE id ORDER BY id DESC LIMIT 3";
+        $sql = " SELECT * FROM vacxin WHERE id ORDER BY id ASC LIMIT 8";
+        $this->setQuery($sql);
+        return $this->loadAllRows();
+    }
+
+    public function vacxin_detail($id) {
+        $sql = "select * from vacxin where id= ?";
+        $this->setQuery($sql);
+        return $this->loadRow(array($id));
+    }
+
 }

@@ -16,7 +16,7 @@
                         <div class="box-body">
                         <h5 style="color: #ffe062; ">Mã khách hàng: <?php echo $m_manage_register->read_customer_by_id($id)->ma_khach_hang; ?>&emsp;Họ và tên: <?php echo $m_manage_register->read_customer_by_id($id)->ho_ten; ?>&emsp;Số điện thoại liên hệ: <?php echo $m_manage_register->read_customer_by_id($id)->so_dien_thoai_lien_lac; ?> </h5>
                         <div class="col-lg-6 col-12 d-flex align-items-sm-center">
-                            <button type="submit" name="btnsearch" class="btn me-1 mt-sm-2" style="background-color: red; margin-left: 1.9%;" onclick="window.location.href='add_customer_detail.php'"></i>Thêm lần tiêm</button>
+                            <button type="submit" name="btnsearch" class="btn me-1 mt-sm-2" style="background-color: #ffa800; margin-left: 1.9%;" onclick="window.location.href='add_customer_detail.php'"></i>Thêm lần tiêm</button>
                         </div>
                             <div class="table-responsive">
                                 <table cellspacing="0" cellpadding="5" id="example" class="table table-bordered table-striped" style="background-color: white;" >

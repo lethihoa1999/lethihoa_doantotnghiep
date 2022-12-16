@@ -10,7 +10,7 @@
                             <h3 class="box-title">Quản lý vacxin theo cơ sở tiêm chủng</h3>
                         </div>
                         <div class="col-lg-6 col-12 d-flex align-items-sm-center">
-                            <button type="submit" name="btnsearch" class="btn me-1 mt-sm-2" style="background-color: red; margin-left: 1.9%;" onclick="window.location.href='add_vacxin.php'"></i>Thêm vacxin</button>
+                            <button type="submit" name="btnsearch" class="btn me-1 mt-sm-2" style="background-color: #ffa800; margin-left: 1.9%;" onclick="window.location.href='add_vacxin.php'"></i>Thêm vacxin</button>
                         </div>
                         
                         <div style="display: inline; margin-top: 1%; margin-left: 2%;"> <?php foreach ($manage_facility as $key=>$value) { ?>
