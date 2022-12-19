@@ -1,4 +1,5 @@
 <?php
+include_once ("models/m_health_record.php");
 include_once ("models/m_customer.php");
 class c_customer {
     public function show_details_customer() {
@@ -140,6 +141,8 @@ class c_customer {
         $chi_tiet_dang_ky = $m_manage_register->read_dang_ky_id($id);
         $ho_ten=$chi_tiet_dang_ky->ho_ten;
         $dang_ky_vacxin = $m_manage_register->read_tiem_vacxin_id($id);
+        // $bac_si = $m_manage_register->read_nguoi_dung($id)
+
     }
         $view = "views/customer/v_manage_register_detail.php";
         include ("templates/font-end/layout.php");
@@ -259,13 +262,18 @@ class c_customer {
                 
                 $ten_co_so= $_POST['ten_co_so'];
                 $ten_vacxin = $_POST['ten_vacxin'];
+                $nguoi_tiem = $_POST['nguoi_tiem'];
                 $ngay_tiem = $_POST['ngay_tiem'];
                 $trang_thai_thanh_toan = $_POST['trang_thai_thanh_toan'];
-                $result = $m_manage_customer->add_manage_customer_detail(null,$_SESSION['kh'],$ten_vacxin,$ten_co_so,$ngay_tiem,$trang_thai_thanh_toan,1);
+                $trang_thai_tiem = $_POST['trang_thai_tiem'];
+                $loai_dang_ky = $_POST['loai_dang_ky'];
+                $result = $m_manage_customer->add_manage_customer_detail(null,$_SESSION['kh'],$ten_vacxin,$ten_co_so,$nguoi_tiem,$ngay_tiem,$trang_thai_thanh_toan,$trang_thai_tiem,$loai_dang_ky,1);
+
             }
                 
         $all_vacxin = $m_manage_customer->read_vacxin();   
         $all_facility = $m_manage_customer->read_facility();
+        $nguoi_tiem = $m_manage_customer->read_nguoi_tiem();
 
         $view = "views/customer/v_add_customer_detail.php";
         include ("templates/font-end/layout.php");
@@ -275,13 +283,23 @@ class c_customer {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             $m_manage_customer = new m_customer();
+            $m_health_record = new m_health_record();
+
             if(isset($_POST['btnsubmit']))
             {
-                $ten_co_so= $_POST['ten_co_so'];
+                // $ten_co_so= $_POST['ten_co_so'];
                 $ten_vacxin = $_POST['ten_vacxin'];
+                $nhan_vien_y_te = $_POST['nhan_vien_y_te'];
                 $ngay_tiem = $_POST['ngay_tiem'];
                 $trang_thai_thanh_toan = $_POST['trang_thai_thanh_toan'];
-                $result = $m_manage_customer->edit_manage_customer_detail($ten_co_so,$ten_vacxin,$ngay_tiem,$trang_thai_thanh_toan,$id);
+                $trang_thai_tiem = $_POST['trang_thai_tiem'];
+                $loai_dang_ky = $_POST['loai_dang_ky'];
+                $result = $m_manage_customer->edit_manage_customer_detail($ten_vacxin,$ngay_tiem,$trang_thai_thanh_toan,$trang_thai_tiem,$loai_dang_ky,$id);
+                // $result = $m_manage_customer->edit_manage_customer_detail($ten_co_so,$ten_vacxin,$ngay_tiem,$trang_thai_thanh_toan,$trang_thai_tiem,$loai_dang_ky,$id);
+
+                if($_POST['trang_thai_tiem'] == 1 && $m_manage_customer->read_customer_detail_by_id($id)->trang_thai_tiem == 0){
+                    $result_2 = $m_health_record->add_health(null,$id,$nhan_vien_y_te,$ngay_tiem,null,null,null,null,2,1);
+                }
             }
                 
         $customer = $m_manage_customer->read_customer_detail_by_id($id);

@@ -87,7 +87,7 @@ $_SESSION['index'] = $index;
             $so_dien_thoai = $_SESSION['so_dien_thoai'];
             $co_so_tiem = $_SESSION['co_so_tiem'];
             $tong_tien = $_SESSION['tong_tien'];
-            $ngay_dang_ky = date("m/d/y", time());    
+            $ngay_dang_ky = date("Y-m-d", time());  
             $result = $m_register_vaccin->add_register_vacxin(null,$ran,$ho_ten,$_SESSION['id_user'],$so_dien_thoai,$ngay_dang_ky,$tong_tien,0,1);
             
             $id_dang_ky_tiem = $m_register_vaccin->read_id_by_ma_dk($ran)->id;

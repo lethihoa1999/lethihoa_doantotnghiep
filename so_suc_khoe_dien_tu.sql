@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 19, 2022 lúc 10:12 AM
+-- Thời gian đã tạo: Th12 19, 2022 lúc 05:16 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.0.19
 
@@ -73,9 +73,9 @@ CREATE TABLE `chi_tiet_khach_hang` (
 --
 
 INSERT INTO `chi_tiet_khach_hang` (`id`, `id_khach_hang`, `id_vacxin`, `id_co_so_tiem`, `id_nguoi_tiem`, `ngay_tiem`, `trang_thai_thanh_toan`, `trang_thai_tiem`, `loai_dang_ky`, `trang_thai`) VALUES
-(2, 2, 2, 2, 0, '2022-12-08', 1, 0, 0, 1),
-(3, 1, 3, 3, 0, '2022-12-16', 1, 0, 0, 1),
-(7, 11, 2, 1, 0, '2022-12-17', 0, 0, 0, 1);
+(2, 2, 2, 2, 2, '2022-12-08', 1, 0, 0, 1),
+(3, 1, 3, 3, 1, '2022-12-16', 1, 1, 1, 1),
+(7, 11, 2, 1, 3, '2022-12-17', 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -175,7 +175,7 @@ CREATE TABLE `goi_vacxin` (
 
 CREATE TABLE `ho_so_suc_khoe` (
   `id` int(11) NOT NULL,
-  `id_khach_hang` int(11) NOT NULL,
+  `id_chi_tiet_khach_hang` int(11) NOT NULL,
   `id_nguoi_kham` int(11) NOT NULL,
   `ngay_kham` date NOT NULL,
   `huyet_ap` double DEFAULT NULL,
@@ -190,9 +190,9 @@ CREATE TABLE `ho_so_suc_khoe` (
 -- Đang đổ dữ liệu cho bảng `ho_so_suc_khoe`
 --
 
-INSERT INTO `ho_so_suc_khoe` (`id`, `id_khach_hang`, `id_nguoi_kham`, `ngay_kham`, `huyet_ap`, `nhip_tim`, `nhiet_do`, `ket_luan`, `luot_tiem`, `trang_thai`) VALUES
-(2, 1, 0, '2022-12-08', 125, 80, 38, 'Không có gì bất thường', 2, 1),
-(4, 2, 0, '2022-12-16', 120, 83, 37, 'Ko có gì đáng lo', 1, 1);
+INSERT INTO `ho_so_suc_khoe` (`id`, `id_chi_tiet_khach_hang`, `id_nguoi_kham`, `ngay_kham`, `huyet_ap`, `nhip_tim`, `nhiet_do`, `ket_luan`, `luot_tiem`, `trang_thai`) VALUES
+(2, 3, 0, '2022-12-08', 125, 80, 38, 'Không có gì bất thường', 2, 1),
+(4, 2, 0, '2022-12-16', 120, 83, 37, 'Đủ sức khỏe tiêm', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -232,17 +232,22 @@ CREATE TABLE `loai_nguoi_dung` (
   `mo_ta` varchar(255) NOT NULL,
   `trang_thai` tinyint(3) DEFAULT 1,
   `tao_boi` varchar(255) DEFAULT NULL,
-  `ngay_tao` datetime DEFAULT NULL,
-  `ngay_cap_nhat` datetime DEFAULT NULL
+  `ngay_tao` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Đang đổ dữ liệu cho bảng `loai_nguoi_dung`
 --
 
-INSERT INTO `loai_nguoi_dung` (`id`, `ten_loai_nguoi_dung`, `mo_ta`, `trang_thai`, `tao_boi`, `ngay_tao`, `ngay_cap_nhat`) VALUES
-(1, 'Khach hang', '', 1, 'Lê Thị Hoa', '2022-01-04 09:55:26', '2022-01-04 09:55:26'),
-(2, 'Admin', '', 1, 'Lê Thị Hoa', '2022-01-04 09:55:26', '2022-01-04 09:55:26');
+INSERT INTO `loai_nguoi_dung` (`id`, `ten_loai_nguoi_dung`, `mo_ta`, `trang_thai`, `tao_boi`, `ngay_tao`) VALUES
+(1, 'Khach hang', '', 1, 'Lê Thị Hoa', '2022-01-04 09:55:26'),
+(2, 'Admin', '', 1, 'Lê Thị Hoa', '2022-01-04 09:55:26'),
+(3, 'Quản lý cơ sở', '', 1, 'Lê Thị Hoa', '2022-12-19 16:59:27'),
+(4, 'Lễ tân', '', 1, 'Lê Thị Hoa', '2022-12-20 17:02:20'),
+(5, 'Bác sĩ', '', 1, 'Lê Thị Hoa', '2022-12-19 17:02:53'),
+(6, 'Người tiêm', '', 1, 'Lê Thị Hoa', '2022-12-19 17:02:53'),
+(7, 'Nhân viên y tế', '', 1, 'Lê Thị Hoa', '2022-12-19 17:03:46'),
+(8, 'Quản lý tin tức', '', 1, 'Lê Thị Hoa', '2022-12-19 17:04:15');
 
 -- --------------------------------------------------------
 
@@ -302,6 +307,9 @@ CREATE TABLE `nguoi_dung` (
 --
 
 INSERT INTO `nguoi_dung` (`id`, `id_loai_nguoi_dung`, `ho_ten`, `so_dien_thoai`, `mat_khau`, `email`, `trang_thai`) VALUES
+(1, 6, 'Lê Thị Hoa', '0915273845', 'e10adc3949ba59abbe56e057f20f883e', 'hoa@gmail.com', 1),
+(2, 6, 'Lê Thị Hiếu', '0987832311', 'e10adc3949ba59abbe56e057f20f883e', 'hieu@gmail.com', 1),
+(3, 6, 'Lê Thị Liên', '0977626821', 'e10adc3949ba59abbe56e057f20f883e', 'lien@gmail.com', 1),
 (25, 1, 'Ngô Ngọc Minh', '0977626821', 'e10adc3949ba59abbe56e057f20f883e', 'Minh@gmail.com', 1),
 (26, 2, 'Triệu Khắc Phi Trường ', '0977626829', 'e10adc3949ba59abbe56e057f20f883e', 'truongtrieu121@gmail.com', 1),
 (27, 1, 'Nguyễn Xuân Nam', '0988715231', 'e10adc3949ba59abbe56e057f20f883e', 'nam@gmail.com', 1),
@@ -672,7 +680,7 @@ ALTER TABLE `co_so_tiem_chung`
 -- AUTO_INCREMENT cho bảng `dang_ky_tiem`
 --
 ALTER TABLE `dang_ky_tiem`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `dang_ky_tiem_vacxin`
@@ -702,7 +710,7 @@ ALTER TABLE `khach_hang`
 -- AUTO_INCREMENT cho bảng `loai_nguoi_dung`
 --
 ALTER TABLE `loai_nguoi_dung`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `nguoi_dung`

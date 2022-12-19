@@ -95,8 +95,11 @@
                 </div>
                             
                             <div class="text-xs-right" style="text-align: center; margin-top: 0.9%;">
+                            <form class="form" action="" method="POST">
                             <button type="submit" name="btnsubmit"  class="btn btn-info me-1" style="margin-left: 0.9%;">Hoàn thành</button>
+                            </form>
                             <button type="button" onclick="window.location.href='confilm_register.php'" class="btn btn-warning me-1" style="margin-left: 0.9%;">Cancel</button>
+
                         </div>
                     </div>
                 </div> 

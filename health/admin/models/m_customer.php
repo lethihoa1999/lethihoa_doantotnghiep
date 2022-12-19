@@ -44,10 +44,10 @@ class m_customer extends database {
         return $this->execute(array($id,$ho_ten,$ma_khach_hang,$gioi_tinh,$ngay_sinh,$so_dien_thoai_lien_lac,$dia_chi,$trang_thai));
     }
 
-    public function add_manage_customer_detail($id,$id_khach_hang,$id_vacxin,$id_co_so_tiem,$ngay_tiem,$trang_thai_thanh_toan,$trang_thai) {
-        $sql = "insert into chi_tiet_khach_hang values(?,?,?,?,?,?,?)";
+    public function add_manage_customer_detail($id,$id_khach_hang,$id_vacxin,$id_co_so_tiem,$id_nguoi_tiem,$ngay_tiem,$trang_thai_thanh_toan,$trang_thai_tiem,$loai_dang_ky,$trang_thai) {
+        $sql = "insert into chi_tiet_khach_hang values(?,?,?,?,?,?,?,?,?,?)";
         $this->setQuery($sql);
-        return $this->execute(array($id,$id_khach_hang,$id_vacxin,$id_co_so_tiem,$ngay_tiem,$trang_thai_thanh_toan,$trang_thai));
+        return $this->execute(array($id,$id_khach_hang,$id_vacxin,$id_co_so_tiem,$id_nguoi_tiem,$ngay_tiem,$trang_thai_thanh_toan,$trang_thai_tiem,$loai_dang_ky,$trang_thai));
     }
 
     public function read_dang_ky_id($id) {
@@ -209,10 +209,10 @@ class m_customer extends database {
         return $this->loadRow(array($id_vacxin,$id_co_so_tiem));
     }
 
-    public function edit_manage_customer_detail($id_co_so_tiem,$id_vacxin,$ngay_tiem,$trang_thai_thanh_toan,$id) {
-        $sql = "update chi_tiet_khach_hang set id_co_so_tiem = ?, id_vacxin = ?, ngay_tiem = ?,trang_thai_thanh_toan = ? where id = ?";
+    public function edit_manage_customer_detail($id_vacxin,$ngay_tiem,$trang_thai_thanh_toan,$trang_thai_tiem,$loai_dang_ky,$id) {
+        $sql = "update chi_tiet_khach_hang set id_vacxin = ?, ngay_tiem = ?,trang_thai_thanh_toan = ?, trang_thai_tiem = ?, loai_dang_ky = ? where id = ?";
         $this->setQuery($sql);
-        return $this->execute(array($id_co_so_tiem,$id_vacxin,$ngay_tiem,$trang_thai_thanh_toan,$id));
+        return $this->execute(array($id_vacxin,$ngay_tiem,$trang_thai_thanh_toan,$trang_thai_tiem,$loai_dang_ky,$id));
     }
 
     public function edit_tong_tien($tong_tien,$id) {
@@ -221,7 +221,19 @@ class m_customer extends database {
         return $this->execute(array($tong_tien,$id));
     }
 
-    
+    public function read_nguoi_dung($id) {
+        $sql = "select * from nguoi_dung where id = ?";
+        $this->setQuery($sql);
+        return $this->loadRow(array($id));
+    }
+
+    public function read_nguoi_tiem() {
+        $sql = "select * from nguoi_dung where id_loai_nguoi_dung = 6";
+        $this->setQuery($sql);
+        return $this->loadAllRows();
+    }
+
+
 
 }
 ?>

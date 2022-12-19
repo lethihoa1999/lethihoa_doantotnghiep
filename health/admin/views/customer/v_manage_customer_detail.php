@@ -25,9 +25,12 @@
                                         <th>STT</th>
                                         <th>Cơ sở tiêm</th>
                                         <th>Vacxin tiêm</th>
-                                        <th>Giá tiền</th>   
+                                        <th>Giá tiền</th>
                                         <th>Ngày tiêm</th>
+                                        <th>Người tiêm</th>
                                         <th>Trạng thái thanh toán</th>
+                                        <th>Trạng thái tiêm</th>
+                                        <th>Loại đăng ký</th>
                                         <th>Hành động</th>
                                     </tr>
                                     </thead>
@@ -39,7 +42,9 @@
                                             <td><?php echo $m_manage_register->read_by_id_co_so_tiem($value->id_co_so_tiem)->ten_co_so ?></td>
                                             <td><?php echo $m_manage_register->read_by_id_vacxin($value->id_vacxin)->ten_vacxin ?></td>
                                             <td><?php echo $m_manage_register->read_by_id_vacxin($value->id_vacxin)->gia_thanh ?></td>
-                                            <td><?php echo $value->ngay_tiem ?></td>
+                                            <td><?php $ngay_tiem=$value->ngay_tiem; echo date("d-m-Y", strtotime($ngay_tiem)); ?></td>
+
+                                            <td><?php echo $m_manage_register->read_nguoi_dung($value->id_nguoi_tiem)->ho_ten; ?></td>
                                             <td><?php if($value->trang_thai_thanh_toan==0){
                                                     echo "Chưa thanh toán";
                                                 } else if($value->trang_thai_thanh_toan==1){
@@ -50,7 +55,24 @@
                                                     echo "Đã hoàn tiền";
                                                 } 
                                             ?></td>
-                                            <td style="text-align: center"><button type="button" class="btn btn-cyan btn-sm" onclick="window.location.href='edit_manage_customer_detail.php?id=<?php echo $value->id;?>'">Edit</button>
+
+                                            <td><?php if($value->trang_thai_tiem==0){
+                                                    echo "Chưa tiêm";
+                                                } else if($value->trang_thai_tiem==1){
+                                                    echo "Đã tiêm";
+                                                } else if($value->trang_thai_tiem==2){
+                                                    echo "Hủy tiêm";
+                                                } 
+                                            ?></td>
+                                            <td><?php if($value->loai_dang_ky==0){
+                                                    echo "Đăng ký trực tuyến";
+                                                } else if($value->loai_dang_ky==1){
+                                                    echo "Đăng ký trực tiếp";
+                                                }
+                                            ?></td>
+
+
+                                            <td style="text-align: center; width: 13%;"><button type="button" class="btn btn-cyan btn-sm" onclick="window.location.href='edit_manage_customer_detail.php?id=<?php echo $value->id;?>'">Edit</button>
                                             <button type="button" name="delete" class="btn btn-danger btn-sm" style="" onclick="window.location.href='delete_customer_detail.php?id=<?php echo $value->id;?>' " >Delete</button></td>
                                         </tr>
                                     <?php } ?>

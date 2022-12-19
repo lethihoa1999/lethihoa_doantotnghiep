@@ -57,10 +57,10 @@ class m_health_record extends database {
         return $this->execute(array($id_khach_hang,$ngay_kham,$huyet_ap,$nhip_tim,$nhiet_do,$ket_luan,$id));
     }
 
-    public function add_health($id,$id_khach_hang,$ngay_kham,$huyet_ap,$nhip_tim,$nhiet_do,$ket_luan,$luot_tiem,$trang_thai) {
-        $sql = "insert into ho_so_suc_khoe values(?,?,?,?,?,?,?,?,?)";
+    public function add_health($id,$id_chi_tiet_khach_hang,$id_nguoi_kham,$ngay_kham,$huyet_ap,$nhip_tim,$nhiet_do,$ket_luan,$luot_tiem,$trang_thai) {
+        $sql = "insert into ho_so_suc_khoe values(?,?,?,?,?,?,?,?,?,?)";
         $this->setQuery($sql);
-        return $this->execute(array($id,$id_khach_hang,$ngay_kham,$huyet_ap,$nhip_tim,$nhiet_do,$ket_luan,$luot_tiem,$trang_thai));
+        return $this->execute(array($id,$id_chi_tiet_khach_hang,$id_nguoi_kham,$ngay_kham,$huyet_ap,$nhip_tim,$nhiet_do,$ket_luan,$luot_tiem,$trang_thai));
     }
 
     public function delete_health_before($id_khach_hang,$ngay_kham){
