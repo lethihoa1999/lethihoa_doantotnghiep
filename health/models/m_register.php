@@ -44,5 +44,11 @@ class m_register extends database {
         return $this->execute(array($mat_khau,$email));
     }
 
+    public function read_vacxin_by_id($id) {
+        $sql = "select * from vacxin where id = ?";
+        $this->setQuery($sql);
+        return $this->loadRow(array($id));
+    }
+
 }
 ?>

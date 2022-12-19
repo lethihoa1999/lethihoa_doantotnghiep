@@ -36,57 +36,83 @@
             ?>
             <!-- Basic Forms -->
             <div class="box">
-                <div class="box-header with-border">
-                    <h4 class="box-title" style="color: cornsilk; display: flex; justify-content: center; margin-top: 1%; ">THANH TOÁN</h4>
-                </div>
+                <div class="box-header with-border" style="color: gold; ">
+                    <h4 class="box-title" style="color: cornsilk; display: flex; justify-content: center; margin-top: 1%; ">Thông tin đăng ký</h4></h4>
+
+               
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div class="row">
-                        <div class="col">
-                            <label>Họ và tên: </label>
-                            <?php 
-                            if(isset($_SESSION['ho_ten'])){
-                                echo $_SESSION['ho_ten'];
-                            } 
-                            ?>
-
-                            <label>Số điện thoại: </label>                  
-                            <?php 
-                            if(isset($_SESSION['so_dien_thoai'])){
-                                echo $_SESSION['so_dien_thoai'];
-                            } 
-                            ?>
-
-                            <label>Cơ sở tiêm: </label>                  
-                            <?php 
-                            if(isset($_SESSION['co_so_tiem'])){
-                                echo $_SESSION['co_so_tiem'];
-                            } 
-                            ?>
-
-                            <label>Vacxin: </label>                  
-                            <?php 
-                            for($i=1; $i <= $_SESSION['index']; $i++){
-                                if(isset($_SESSION['ten_vacxin'][$i])){
-                                    echo "         ".$_SESSION['ten_vacxin'][$i];
-                                }
-
-                                // if(isset($_SESSION['so_luong'][$i])){
-                                //     echo $_SESSION['so_luong'][$i];
-                                // }
-
-                                // if(isset($_SESSION['ngay_du_kien_tiem'][$i])){
-                                //     echo $_SESSION['ngay_du_kien_tiem'][$i];
-                                // }
-
-                                // if(isset($_SESSION['gia_tien'][$i])){
-                                //     echo $_SESSION['gia_tien'][$i];
-                                // }
-                            }
-                            ?>
-                        </div>
+                    <div class="row" style="font-size: 21px;">
+                            <div class="col-4">
+                                <label>Họ và tên: </label>
+                                <?php 
+                                if(isset($_SESSION['ho_ten'])){
+                                    echo $_SESSION['ho_ten'];
+                                } 
+                                ?>
+                            </div>
+                            <div class="col-4">
+                                <label>Số điện thoại: </label>                  
+                                <?php 
+                                if(isset($_SESSION['so_dien_thoai'])){
+                                    echo $_SESSION['so_dien_thoai'];
+                                } 
+                                ?>
+                            </div>
+                            <div class="col-4">
+                                <label>Cơ sở tiêm: </label>                  
+                                <?php 
+                                if(isset($_SESSION['co_so_tiem'])){
+                                    echo $m_register_vaccin->read_facility_by_id($_SESSION['co_so_tiem'][$i])->ten_co_so;
+                                } 
+                                ?>
+                            </div>
                     </div>
                 </div>
+                <div class="table-responsive">
+                                <table id="example" class="table table-bordered table-striped" style="color: gold;">
+                                    <thead>
+                                    <tr>
+                                        <th>Tên Vacxin</th>
+                                        <th>Số lượng</th>
+                                        <th>Ngày dự kiến tiêm</th>
+                                        <th>Giá tiền</th>         
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php  for($i=1; $i <= $_SESSION['index']; $i++) { ?>
+                                        <tr>
+                                            <td><?php if(isset($_SESSION['ten_vacxin'][$i])){
+                                    echo $m_register_vaccin->read_vacxin_by_id($_SESSION['ten_vacxin'][$i])->ten_vacxin;
+                                }?></td>
+                                            <td><?php if(isset($_SESSION['so_luong'][$i])){
+                                    echo $_SESSION['so_luong'][$i];
+                                }
+                                                ?></td>
+                                            <td><?php if(isset($_SESSION['ngay_du_kien_tiem'][$i])){
+                                    echo $_SESSION['ngay_du_kien_tiem'][$i];
+                                } ?></td>
+                                            <td><?php if(isset($_SESSION['gia_tien'][$i])){
+                                    echo $_SESSION['gia_tien'][$i];
+                                }?></td>
+                                            
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <label>Tổng tiền</label>
+                            <?php 
+                            if(isset($_SESSION['tong_tien'])){
+                                echo $_SESSION['tong_tien'];
+                            } 
+                            ?>
+                            <div class="text-xs-right" style="text-align: center; margin-top: 0.9%;">
+                            <button type="button" onclick="window.location.href='pay_money.php'" class="btn btn-info me-1" style="margin-left: 0.9%;">Đăng ký</button>
+                            <button type="button" onclick="window.location.href='register_vacxin.php'" class="btn btn-warning me-1" style="margin-left: 0.9%;">Cancel</button>
+                        </div>
+                    </div>
+                </div> 
             </div>
         </section>
     </div>

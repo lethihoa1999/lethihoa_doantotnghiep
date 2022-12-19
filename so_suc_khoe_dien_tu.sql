@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 16, 2022 lúc 11:48 AM
+-- Thời gian đã tạo: Th12 19, 2022 lúc 10:12 AM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.0.19
 
@@ -60,8 +60,11 @@ CREATE TABLE `chi_tiet_khach_hang` (
   `id_khach_hang` int(11) NOT NULL,
   `id_vacxin` int(11) NOT NULL,
   `id_co_so_tiem` int(11) NOT NULL,
+  `id_nguoi_tiem` tinyint(3) NOT NULL,
   `ngay_tiem` date NOT NULL,
   `trang_thai_thanh_toan` tinyint(4) NOT NULL DEFAULT 0,
+  `trang_thai_tiem` tinyint(3) NOT NULL,
+  `loai_dang_ky` tinyint(3) NOT NULL,
   `trang_thai` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -69,9 +72,10 @@ CREATE TABLE `chi_tiet_khach_hang` (
 -- Đang đổ dữ liệu cho bảng `chi_tiet_khach_hang`
 --
 
-INSERT INTO `chi_tiet_khach_hang` (`id`, `id_khach_hang`, `id_vacxin`, `id_co_so_tiem`, `ngay_tiem`, `trang_thai_thanh_toan`, `trang_thai`) VALUES
-(2, 2, 2, 2, '2022-12-08', 1, 1),
-(3, 1, 3, 3, '2022-12-16', 0, 1);
+INSERT INTO `chi_tiet_khach_hang` (`id`, `id_khach_hang`, `id_vacxin`, `id_co_so_tiem`, `id_nguoi_tiem`, `ngay_tiem`, `trang_thai_thanh_toan`, `trang_thai_tiem`, `loai_dang_ky`, `trang_thai`) VALUES
+(2, 2, 2, 2, 0, '2022-12-08', 1, 0, 0, 1),
+(3, 1, 3, 3, 0, '2022-12-16', 1, 0, 0, 1),
+(7, 11, 2, 1, 0, '2022-12-17', 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -112,6 +116,8 @@ CREATE TABLE `dang_ky_tiem` (
   `id_nguoi_dung` int(11) NOT NULL,
   `so_dien_thoai` varchar(11) NOT NULL,
   `ngay_dang_ky` date NOT NULL,
+  `tong_tien` int(11) NOT NULL,
+  `trang_thai_thanh_toan` tinyint(4) NOT NULL DEFAULT 0,
   `trang_thai` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -119,8 +125,8 @@ CREATE TABLE `dang_ky_tiem` (
 -- Đang đổ dữ liệu cho bảng `dang_ky_tiem`
 --
 
-INSERT INTO `dang_ky_tiem` (`id`, `ma_dang_ky`, `ho_ten`, `id_nguoi_dung`, `so_dien_thoai`, `ngay_dang_ky`, `trang_thai`) VALUES
-(3, 'abc123456', 'Lê Thanh Trúc', 0, '0977626821', '2022-12-22', 1);
+INSERT INTO `dang_ky_tiem` (`id`, `ma_dang_ky`, `ho_ten`, `id_nguoi_dung`, `so_dien_thoai`, `ngay_dang_ky`, `tong_tien`, `trang_thai_thanh_toan`, `trang_thai`) VALUES
+(3, 'abc123456', 'Lê Thanh Trúc', 0, '0977626821', '2022-12-22', 3045000, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -143,7 +149,7 @@ CREATE TABLE `dang_ky_tiem_vacxin` (
 --
 
 INSERT INTO `dang_ky_tiem_vacxin` (`id`, `id_dang_ky_tiem`, `id_quan_ly_vacxin`, `so_luong`, `gia_tien`, `ngay_du_kien_tiem`, `trang_thai`) VALUES
-(20, 3, 8, 2, 5500000, '2022-12-16', 1);
+(20, 3, 8, 3, 3045000, '2022-12-16', 1);
 
 -- --------------------------------------------------------
 
@@ -170,11 +176,12 @@ CREATE TABLE `goi_vacxin` (
 CREATE TABLE `ho_so_suc_khoe` (
   `id` int(11) NOT NULL,
   `id_khach_hang` int(11) NOT NULL,
+  `id_nguoi_kham` int(11) NOT NULL,
   `ngay_kham` date NOT NULL,
-  `huyet_ap` double NOT NULL,
-  `nhip_tim` int(11) NOT NULL,
-  `nhiet_do` int(11) NOT NULL,
-  `ket_luan` varchar(255) NOT NULL,
+  `huyet_ap` double DEFAULT NULL,
+  `nhip_tim` int(11) DEFAULT NULL,
+  `nhiet_do` int(11) DEFAULT NULL,
+  `ket_luan` varchar(255) DEFAULT NULL,
   `luot_tiem` tinyint(4) NOT NULL,
   `trang_thai` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -183,9 +190,9 @@ CREATE TABLE `ho_so_suc_khoe` (
 -- Đang đổ dữ liệu cho bảng `ho_so_suc_khoe`
 --
 
-INSERT INTO `ho_so_suc_khoe` (`id`, `id_khach_hang`, `ngay_kham`, `huyet_ap`, `nhip_tim`, `nhiet_do`, `ket_luan`, `luot_tiem`, `trang_thai`) VALUES
-(2, 1, '2022-12-08', 125, 80, 38, 'Không có gì bất thường', 2, 1),
-(4, 2, '2022-12-16', 120, 83, 37, 'Ko có gì đáng lo', 1, 1);
+INSERT INTO `ho_so_suc_khoe` (`id`, `id_khach_hang`, `id_nguoi_kham`, `ngay_kham`, `huyet_ap`, `nhip_tim`, `nhiet_do`, `ket_luan`, `luot_tiem`, `trang_thai`) VALUES
+(2, 1, 0, '2022-12-08', 125, 80, 38, 'Không có gì bất thường', 2, 1),
+(4, 2, 0, '2022-12-16', 120, 83, 37, 'Ko có gì đáng lo', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -210,7 +217,8 @@ CREATE TABLE `khach_hang` (
 
 INSERT INTO `khach_hang` (`id`, `ho_ten`, `ma_khach_hang`, `gioi_tinh`, `ngay_sinh`, `so_dien_thoai_lien_lac`, `dia_chi`, `trang_thai`) VALUES
 (1, 'Phạm Nhật Minh', 21006, 'Nam', '2020-10-09', '0988372114', 'Khu đô thị Phú Lương - Hà Đông - Hà Nội', 1),
-(2, 'Nguyễn Gia Hân', 21019, 'Nữ', '2002-12-10', '0977676898', '175 - Phú Lương - Hà Đông - Hà Nội', 1);
+(2, 'Nguyễn Gia Hân', 21019, 'Nữ', '2002-12-10', '0977676898', '175 - Phú Lương - Hà Đông - Hà Nội', 1),
+(11, 'Hoa', 20, 'Nữ', '2022-12-21', '0988372114', 'Phú Lương - Hà Đông - Hà Nội', 1);
 
 -- --------------------------------------------------------
 
@@ -313,194 +321,195 @@ CREATE TABLE `quan_ly_vacxin` (
   `id` int(11) NOT NULL,
   `id_vacxin` int(11) NOT NULL,
   `id_co_so_tiem` int(11) NOT NULL,
-  `so_luong` int(11) NOT NULL
+  `so_luong` int(11) NOT NULL,
+  `so_luong_thuc` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `quan_ly_vacxin`
 --
 
-INSERT INTO `quan_ly_vacxin` (`id`, `id_vacxin`, `id_co_so_tiem`, `so_luong`) VALUES
-(7, 2, 1, 656),
-(8, 2, 2, 789),
-(9, 2, 3, 456),
-(10, 2, 4, 357),
-(11, 2, 5, 465),
-(12, 2, 6, 876),
-(13, 3, 1, 674),
-(14, 3, 2, 750),
-(15, 3, 3, 898),
-(16, 3, 4, 754),
-(17, 3, 5, 465),
-(18, 3, 6, 876),
-(19, 4, 1, 867),
-(20, 4, 2, 630),
-(21, 4, 3, 456),
-(22, 4, 4, 754),
-(23, 4, 5, 970),
-(24, 4, 6, 876),
-(25, 5, 1, 867),
-(26, 5, 2, 750),
-(27, 5, 3, 898),
-(28, 5, 4, 754),
-(29, 5, 5, 970),
-(30, 5, 6, 876),
-(31, 6, 1, 867),
-(32, 6, 2, 750),
-(33, 6, 3, 898),
-(34, 6, 4, 754),
-(35, 6, 5, 970),
-(36, 6, 6, 876),
-(43, 8, 1, 867),
-(44, 8, 2, 954),
-(45, 8, 3, 898),
-(46, 8, 4, 754),
-(47, 8, 5, 465),
-(48, 8, 6, 876),
-(49, 9, 1, 867),
-(50, 9, 2, 600),
-(51, 9, 3, 898),
-(52, 9, 4, 754),
-(53, 9, 5, 970),
-(54, 9, 6, 876),
-(55, 10, 1, 867),
-(56, 10, 2, 630),
-(57, 10, 3, 898),
-(58, 10, 4, 754),
-(59, 10, 5, 970),
-(60, 10, 6, 876),
-(61, 11, 1, 867),
-(62, 11, 2, 750),
-(63, 11, 3, 456),
-(64, 11, 4, 754),
-(65, 11, 5, 970),
-(66, 11, 6, 876),
-(67, 12, 1, 949),
-(68, 12, 2, 759),
-(69, 12, 3, 456),
-(70, 12, 4, 357),
-(71, 12, 5, 970),
-(72, 12, 6, 876),
-(73, 13, 1, 756),
-(74, 13, 2, 789),
-(75, 13, 3, 689),
-(76, 13, 4, 754),
-(77, 13, 5, 970),
-(78, 13, 6, 876),
-(79, 14, 1, 867),
-(80, 14, 2, 954),
-(81, 14, 3, 456),
-(82, 14, 4, 357),
-(83, 14, 5, 270),
-(84, 14, 6, 181),
-(85, 15, 1, 756),
-(86, 15, 2, 123),
-(87, 15, 3, 356),
-(88, 15, 4, 90),
-(89, 15, 5, 270),
-(90, 15, 6, 876),
-(91, 16, 1, 134),
-(92, 16, 2, 750),
-(93, 16, 3, 356),
-(94, 16, 4, 754),
-(95, 16, 5, 270),
-(96, 16, 6, 181),
-(97, 17, 1, 654),
-(98, 17, 2, 457),
-(99, 17, 3, 356),
-(100, 17, 4, 754),
-(101, 17, 5, 190),
-(102, 17, 6, 181),
-(103, 18, 1, 654),
-(104, 18, 2, 230),
-(105, 18, 3, 456),
-(106, 18, 4, 754),
-(107, 18, 5, 190),
-(108, 18, 6, 876),
-(109, 19, 1, 867),
-(110, 19, 2, 750),
-(111, 19, 3, 689),
-(112, 19, 4, 357),
-(113, 19, 5, 190),
-(114, 19, 6, 181),
-(115, 20, 1, 867),
-(116, 20, 2, 630),
-(117, 20, 3, 689),
-(118, 20, 4, 754),
-(119, 20, 5, 270),
-(120, 20, 6, 876),
-(121, 21, 1, 867),
-(122, 21, 2, 750),
-(123, 21, 3, 898),
-(124, 21, 4, 90),
-(125, 21, 5, 465),
-(126, 21, 6, 876),
-(127, 22, 1, 867),
-(128, 22, 2, 600),
-(129, 22, 3, 545),
-(130, 22, 4, 357),
-(131, 22, 5, 190),
-(132, 22, 6, 876),
-(133, 23, 1, 867),
-(134, 23, 2, 600),
-(135, 23, 3, 898),
-(136, 23, 4, 90),
-(137, 23, 5, 970),
-(138, 23, 6, 181),
-(139, 24, 1, 756),
-(140, 24, 2, 535),
-(141, 24, 3, 356),
-(142, 24, 4, 90),
-(143, 24, 5, 970),
-(144, 24, 6, 181),
-(145, 25, 1, 756),
-(146, 25, 2, 954),
-(147, 25, 3, 456),
-(148, 25, 4, 235),
-(149, 25, 5, 465),
-(150, 25, 6, 876),
-(151, 26, 1, 756),
-(152, 26, 2, 630),
-(153, 26, 3, 898),
-(154, 26, 4, 235),
-(155, 26, 5, 970),
-(156, 26, 6, 181),
-(157, 26, 1, 654),
-(158, 26, 2, 789),
-(159, 26, 3, 898),
-(160, 26, 4, 357),
-(161, 26, 5, 270),
-(162, 26, 6, 181),
-(163, 27, 1, 867),
-(164, 27, 2, 750),
-(165, 27, 3, 689),
-(166, 27, 4, 754),
-(167, 27, 5, 970),
-(168, 27, 6, 181),
-(169, 28, 1, 654),
-(170, 28, 2, 750),
-(171, 28, 3, 234),
-(172, 28, 4, 90),
-(173, 28, 5, 970),
-(174, 28, 6, 181),
-(175, 29, 1, 756),
-(176, 29, 2, 789),
-(177, 29, 3, 545),
-(178, 29, 4, 235),
-(179, 29, 5, 270),
-(180, 29, 6, 876),
-(181, 30, 1, 867),
-(182, 30, 2, 600),
-(183, 30, 3, 456),
-(184, 30, 4, 754),
-(185, 30, 5, 270),
-(186, 30, 6, 876),
-(187, 31, 1, 867),
-(188, 31, 2, 535),
-(189, 31, 3, 456),
-(190, 31, 4, 754),
-(191, 31, 5, 970),
-(192, 31, 6, 876);
+INSERT INTO `quan_ly_vacxin` (`id`, `id_vacxin`, `id_co_so_tiem`, `so_luong`, `so_luong_thuc`) VALUES
+(7, 2, 1, 656, 0),
+(8, 2, 2, 789, 0),
+(9, 2, 3, 456, 0),
+(10, 2, 4, 357, 0),
+(11, 2, 5, 465, 0),
+(12, 2, 6, 876, 0),
+(13, 3, 1, 674, 0),
+(14, 3, 2, 750, 0),
+(15, 3, 3, 898, 0),
+(16, 3, 4, 754, 0),
+(17, 3, 5, 465, 0),
+(18, 3, 6, 876, 0),
+(19, 4, 1, 867, 0),
+(20, 4, 2, 630, 0),
+(21, 4, 3, 456, 0),
+(22, 4, 4, 754, 0),
+(23, 4, 5, 970, 0),
+(24, 4, 6, 876, 0),
+(25, 5, 1, 867, 0),
+(26, 5, 2, 750, 0),
+(27, 5, 3, 898, 0),
+(28, 5, 4, 754, 0),
+(29, 5, 5, 970, 0),
+(30, 5, 6, 876, 0),
+(31, 6, 1, 867, 0),
+(32, 6, 2, 750, 0),
+(33, 6, 3, 898, 0),
+(34, 6, 4, 754, 0),
+(35, 6, 5, 970, 0),
+(36, 6, 6, 876, 0),
+(43, 8, 1, 867, 0),
+(44, 8, 2, 954, 0),
+(45, 8, 3, 898, 0),
+(46, 8, 4, 754, 0),
+(47, 8, 5, 465, 0),
+(48, 8, 6, 876, 0),
+(49, 9, 1, 867, 0),
+(50, 9, 2, 600, 0),
+(51, 9, 3, 898, 0),
+(52, 9, 4, 754, 0),
+(53, 9, 5, 970, 0),
+(54, 9, 6, 876, 0),
+(55, 10, 1, 867, 0),
+(56, 10, 2, 630, 0),
+(57, 10, 3, 898, 0),
+(58, 10, 4, 754, 0),
+(59, 10, 5, 970, 0),
+(60, 10, 6, 876, 0),
+(61, 11, 1, 867, 0),
+(62, 11, 2, 750, 0),
+(63, 11, 3, 456, 0),
+(64, 11, 4, 754, 0),
+(65, 11, 5, 970, 0),
+(66, 11, 6, 876, 0),
+(67, 12, 1, 949, 0),
+(68, 12, 2, 759, 0),
+(69, 12, 3, 456, 0),
+(70, 12, 4, 357, 0),
+(71, 12, 5, 970, 0),
+(72, 12, 6, 876, 0),
+(73, 13, 1, 756, 0),
+(74, 13, 2, 789, 0),
+(75, 13, 3, 689, 0),
+(76, 13, 4, 754, 0),
+(77, 13, 5, 970, 0),
+(78, 13, 6, 876, 0),
+(79, 14, 1, 867, 0),
+(80, 14, 2, 954, 0),
+(81, 14, 3, 456, 0),
+(82, 14, 4, 357, 0),
+(83, 14, 5, 270, 0),
+(84, 14, 6, 181, 0),
+(85, 15, 1, 756, 0),
+(86, 15, 2, 123, 0),
+(87, 15, 3, 356, 0),
+(88, 15, 4, 90, 0),
+(89, 15, 5, 270, 0),
+(90, 15, 6, 876, 0),
+(91, 16, 1, 134, 0),
+(92, 16, 2, 750, 0),
+(93, 16, 3, 356, 0),
+(94, 16, 4, 754, 0),
+(95, 16, 5, 270, 0),
+(96, 16, 6, 181, 0),
+(97, 17, 1, 654, 0),
+(98, 17, 2, 457, 0),
+(99, 17, 3, 356, 0),
+(100, 17, 4, 754, 0),
+(101, 17, 5, 190, 0),
+(102, 17, 6, 181, 0),
+(103, 18, 1, 654, 0),
+(104, 18, 2, 230, 0),
+(105, 18, 3, 456, 0),
+(106, 18, 4, 754, 0),
+(107, 18, 5, 190, 0),
+(108, 18, 6, 876, 0),
+(109, 19, 1, 867, 0),
+(110, 19, 2, 750, 0),
+(111, 19, 3, 689, 0),
+(112, 19, 4, 357, 0),
+(113, 19, 5, 190, 0),
+(114, 19, 6, 181, 0),
+(115, 20, 1, 867, 0),
+(116, 20, 2, 630, 0),
+(117, 20, 3, 689, 0),
+(118, 20, 4, 754, 0),
+(119, 20, 5, 270, 0),
+(120, 20, 6, 876, 0),
+(121, 21, 1, 867, 0),
+(122, 21, 2, 750, 0),
+(123, 21, 3, 898, 0),
+(124, 21, 4, 90, 0),
+(125, 21, 5, 465, 0),
+(126, 21, 6, 876, 0),
+(127, 22, 1, 867, 0),
+(128, 22, 2, 600, 0),
+(129, 22, 3, 545, 0),
+(130, 22, 4, 357, 0),
+(131, 22, 5, 190, 0),
+(132, 22, 6, 876, 0),
+(133, 23, 1, 867, 0),
+(134, 23, 2, 600, 0),
+(135, 23, 3, 898, 0),
+(136, 23, 4, 90, 0),
+(137, 23, 5, 970, 0),
+(138, 23, 6, 181, 0),
+(139, 24, 1, 756, 0),
+(140, 24, 2, 535, 0),
+(141, 24, 3, 356, 0),
+(142, 24, 4, 90, 0),
+(143, 24, 5, 970, 0),
+(144, 24, 6, 181, 0),
+(145, 25, 1, 756, 0),
+(146, 25, 2, 954, 0),
+(147, 25, 3, 456, 0),
+(148, 25, 4, 235, 0),
+(149, 25, 5, 465, 0),
+(150, 25, 6, 876, 0),
+(151, 26, 1, 756, 0),
+(152, 26, 2, 630, 0),
+(153, 26, 3, 898, 0),
+(154, 26, 4, 235, 0),
+(155, 26, 5, 970, 0),
+(156, 26, 6, 181, 0),
+(157, 26, 1, 654, 0),
+(158, 26, 2, 789, 0),
+(159, 26, 3, 898, 0),
+(160, 26, 4, 357, 0),
+(161, 26, 5, 270, 0),
+(162, 26, 6, 181, 0),
+(163, 27, 1, 867, 0),
+(164, 27, 2, 750, 0),
+(165, 27, 3, 689, 0),
+(166, 27, 4, 754, 0),
+(167, 27, 5, 970, 0),
+(168, 27, 6, 181, 0),
+(169, 28, 1, 654, 0),
+(170, 28, 2, 750, 0),
+(171, 28, 3, 234, 0),
+(172, 28, 4, 90, 0),
+(173, 28, 5, 970, 0),
+(174, 28, 6, 181, 0),
+(175, 29, 1, 756, 0),
+(176, 29, 2, 789, 0),
+(177, 29, 3, 545, 0),
+(178, 29, 4, 235, 0),
+(179, 29, 5, 270, 0),
+(180, 29, 6, 876, 0),
+(181, 30, 1, 867, 0),
+(182, 30, 2, 600, 0),
+(183, 30, 3, 456, 0),
+(184, 30, 4, 754, 0),
+(185, 30, 5, 270, 0),
+(186, 30, 6, 876, 0),
+(187, 31, 1, 867, 0),
+(188, 31, 2, 535, 0),
+(189, 31, 3, 456, 0),
+(190, 31, 4, 754, 0),
+(191, 31, 5, 970, 0),
+(192, 31, 6, 876, 0);
 
 -- --------------------------------------------------------
 
@@ -530,7 +539,7 @@ INSERT INTO `vacxin` (`id`, `ten_vacxin`, `nuoc_san_xuat`, `gia_thanh`, `anh`, `
 (5, 'Phòng tiêu chảy cấp do Rota virus (Rotarix)', 'Bỉ', 825000, 'prevenar.jpg', '<h4 class=\"color-h\">Nguồn gốc</h4><br>\r\n<span>Vắc xin Rotarix được nghiên cứu và phát triển bởi tập đoàn hàng đầu thế giới về dược phẩm và chế phẩm sinh học – GlaxoSmithKline (Bỉ).</span><br>\r\n<h4 class=\"color-h\">Đường tiêm</h4><br>\r\n<span>Chỉ dùng đường uống.<br>\r\nVắc xin Rotarix có khả năng bám dính rất tốt vì vậy sau khi uống nếu trẻ có nôn trớ thì cũng không cần uống liều khác. Tuy nhiên nếu xác định rằng đã bị nôn trớ phần lớn vắc xin thì có thể uống lại.</span><br>\r\n<h4 class=\"color-h\">Chống chỉ định</h4><br>\r\n<span>Không dùng vắc xin Rotarix cho trẻ đã quá mẫn cảm ở lần uống đầu tiên hoặc với bất kỳ thành phần nào của vắc xin.\r\nKhông dùng cho trẻ có dị tật bẩm sinh về đường tiêu hóa vì có thể dẫn đến lồng ruột (như túi thừa Mackel).</span><br>\r\n<h4 class=\"color-h\">Đối tượng</h4><br>\r\n<span>Vắc xin Rotarix được chỉ định chủng ngừa cho trẻ từ 6 tuần tuổi phòng tránh nguy cơ nhiễm virus Rota – nguyên nhân gây tiêu chảy cấp ở trẻ nhỏ.</span><br>\r\n<h4 class=\"color-h\"> Phác đồ, lịch tiêm</h4><br>\r\n<span>Vắc xin Rotarix (Bỉ) có lịch uống 2 liều liên tiếp cách nhau tối thiểu 4 tuần.<br>\r\n\r\nLiều đầu tiên có thể uống sớm lúc 6 tuần tuổi.<br>\r\nCần hoàn thành phác đồ muộn nhất đến trước 24 tuần (6 tháng tuổi).</span><br>', 1),
 (6, 'Phòng tiêu chảy cấp do Rota virus (Rotavin-M1)', 'Việt Nam', 490000, 'SYNFLORIX.jpg', '<h4 class=\"color-h\">Nguồn gốc</h4><br>\r\n<span>Vắc xin Rotateq được nghiên cứu và phát triển bởi tập đoàn hàng đầu thế giới về dược phẩm và chế phẩm sinh học Meck Sharp and Dohme (MSD) – Mỹ. </span><br>\r\n<h4 class=\"color-h\">Đường tiêm</h4><br>\r\n<span>Chỉ dùng đường uống. Không được tiêm.<br>\r\nNếu trẻ bị nôn trớ hoặc nhổ ra thì không được uống liều thay thế vì chưa có nghiên cứu lâm sàng cho việc uống thay thế. Cứ dùng liều tiếp theo trong lịch uống vắc xin.<br>\r\nVắc xin được đóng trong tuýp định liều có thể vặn nắp và cho uống luôn, không được pha loãng bằng nước hoặc sữa.</span><br>\r\n<h4 class=\"color-h\">Chống chỉ định</h4><br>\r\n<span>Không dùng vắc xin cho trẻ khi có dị ứng với bất kỳ thành phần nào trong vắc xin.<br>\r\nKhông dùng liều tiếp theo nếu trẻ có biểu hiện mẫn cảm với lần uống vắc xin Rotateq trước.<br>\r\nKhông dùng vắc xin Rotateq cho trẻ suy giảm miễn dịch kết hợp trầm trọng, vì đã có báo cáo về trường hợp viêm dạ dày ruột khi dùng vắc xin ở trẻ suy giảm miễn dịch kết hợp trầm trọng.</span><br>\r\n<h4 class=\"color-h\">Đối tượng</h4><br>\r\n<span>Vắc xin Rotateq được chỉ định chủng ngừa cho trẻ từ 6 tuần tuổi phòng tránh nguy cơ nhiễm virus Rota – nguyên nhân gây tiêu chảy cấp ở trẻ nhỏ.</span><br>\r\n<h4 class=\"color-h\"> Phác đồ, lịch tiêm</h4><br>\r\n<span>Vắc xin Rotateq (Mỹ) có lịch uống 3 liều, các liều cách nhau tối thiểu 4 tuần:\r\n\r\nLiều đầu tiên khi trẻ được 7.5 tuần đến tròn 12 tuần tuổi.<br>\r\nCần hoàn thành phác đồ muộn nhất đến trước 32 tuần.</span><br>', 1),
 (8, 'Các bệnh do phế cầu (Prevenar 13)', 'Bỉ', 1290000, 'vaxigrip-tetra.jpg', '<h4 class=\"color-h\">Nguồn gốc</h4><br>\r\n<span>Vắc xin Prevenar-13 được nghiên cứu và phát triển bởi tập đoàn hàng đầu thế giới về dược phẩm và chế phẩm sinh học – Pfizer (Mỹ). Prevenar-13 được sản xuất tại Bỉ.</span><br>\r\n<h4 class=\"color-h\">Đường tiêm</h4><br>\r\n<span>Vắc xin Prevenar-13 được chỉ định tiêm bắp (vùng cơ delta) với liều 0.5ml</span><br>\r\n<h4 class=\"color-h\">Chống chỉ định</h4><br>\r\n<span>Không dùng vắc xin Prevenar-13 trong thai kỳ.<br>\r\nKhông tiêm vắc xin Prevenar-13 với người quá mẫn cảm với thành phần trong vắc xin hoặc với độc tố bạch hầu.<br>\r\nKhông tiêm vắc xin Prevenar-13 ở bệnh nhân giảm tiểu cầu hoặc bất kỳ rối loạn đông máu nào.</span><br>\r\n<h4 class=\"color-h\">Đối tượng</h4><br>\r\n<span>Vắc xin Prevenar-13 (Bỉ) được chỉ định cho trẻ từ 2 tháng tuổi trở lên và người lớn.</span><br>\r\n<h4 class=\"color-h\"> Phác đồ, lịch tiêm</h4><br>\r\n<span>Từ 6 tuần tuổi đến dưới 7 tháng tuổi:  Lịch tiêm gồm 4 mũi:<br>\r\n\r\nMũi 1: lần tiêm đầu tiên.<br>\r\nMũi 2: cách mũi 1 là 1 tháng.<br>\r\nMũi 3: cách mũi 2 là 1 tháng.<br>\r\nMũi 4 (mũi nhắc lại): sau 8 tháng kể từ mũi thứ 3<br>\r\n(Mũi 4 cách mũi 3 tối thiểu 2 tháng, khi trẻ 11-15 tháng tuổi).<br>\r\n\r\nTừ 7 tháng đến dưới 12 tháng tuổi (chưa từng được tiêm phòng vắc xin trước đó): <br> Lịch tiêm gồm 3 mũi:<br>\r\n\r\nMũi 1: lần tiêm đầu tiên.<br>\r\nMũi 2: cách mũi 1 là 1 tháng.<br>\r\nMũi 3 (mũi nhắc lại): cách mũi 2 là 6 tháng.<br>\r\n(Mũi 3 cách mũi 2 tối thiểu 2 tháng, khi trẻ trên 1 tuổi)<br>\r\n\r\nTừ 12 tháng đến dưới 24 tháng tuổi (chưa từng được tiêm phòng vắc xin trước đó):  Lịch tiêm gồm 2 mũi:<br>\r\n\r\nMũi 1: lần tiêm đầu tiên.<br>\r\nMũi 2: cách mũi 1 là 2 tháng.<br>\r\nTừ 24 tháng đến người lớn (chưa từng được tiêm phòng vắc xin trước đó hoặc chưa từng tiêm vắc xin Pneumo 23):<br>  Lịch tiêm 01 mũi.</span><br>', 1),
-(9, 'Lao (BCG (lọ 1ml))', 'Việt Nam', 125000, '', '', 1),
+(9, 'Lao (BCG (lọ 1ml))', 'Việt Nam', 125000, 'vacxin-MVVac.jpg', '', 1),
 (10, 'Lao (BCG (liều 0,1ml))', 'Việt Nam', 70000, '', '', 1),
 (11, 'Viêm gan B người lớn (Engerix B 1ml)', 'Bỉ', 235000, '', '', 1),
 (12, 'Viêm gan B người lớn (Euvax B 1ml)', 'Hàn Quốc', 170000, '', '', 1),
@@ -651,7 +660,7 @@ ALTER TABLE `benh_hoc`
 -- AUTO_INCREMENT cho bảng `chi_tiet_khach_hang`
 --
 ALTER TABLE `chi_tiet_khach_hang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `co_so_tiem_chung`
@@ -687,7 +696,7 @@ ALTER TABLE `ho_so_suc_khoe`
 -- AUTO_INCREMENT cho bảng `khach_hang`
 --
 ALTER TABLE `khach_hang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `loai_nguoi_dung`

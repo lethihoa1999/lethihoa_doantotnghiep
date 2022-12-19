@@ -31,7 +31,7 @@ class c_user_login {
         if (!empty($user) && isset($user->id_loai_nguoi_dung) && $user->id_loai_nguoi_dung == 1) {
             $_SESSION['user'] = $user->ho_ten;
             $_SESSION['email'] = $user->email;
-            $_SESSION['id'] = $user->id;
+            $_SESSION['id_user'] = $user->id;
         }
     }
 

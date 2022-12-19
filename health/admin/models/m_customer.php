@@ -215,6 +215,12 @@ class m_customer extends database {
         return $this->execute(array($id_co_so_tiem,$id_vacxin,$ngay_tiem,$trang_thai_thanh_toan,$id));
     }
 
+    public function edit_tong_tien($tong_tien,$id) {
+        $sql = "update dang_ky_tiem set tong_tien = ? where id = ?";
+        $this->setQuery($sql);
+        return $this->execute(array($tong_tien,$id));
+    }
+
     
 
 }

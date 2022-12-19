@@ -135,7 +135,7 @@ class c_customer {
         
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
-            $_SESSION['id']=$id;
+            $_SESSION['id_re']=$id;
         $m_manage_register = new m_customer();
         $chi_tiet_dang_ky = $m_manage_register->read_dang_ky_id($id);
         $ho_ten=$chi_tiet_dang_ky->ho_ten;
@@ -161,6 +161,13 @@ class c_customer {
 
                 $ngay_du_kien_tiem = $_POST['ngay_du_kien_tiem'];
                 $result = $m_manage_register->edit_register_detail($id_quan_ly_vacxin,$so_luong,$gia_tien,$ngay_du_kien_tiem,$id);
+                $quan_ly_vacxin = $m_manage_register->read_tiem_vacxin_id($_SESSION['id_re']);
+                $tong_tien =0;
+                foreach($quan_ly_vacxin as $value){
+                    $tong_tien += $value->gia_tien;
+                }
+                
+                $result_tongtien = $m_manage_register->edit_tong_tien($tong_tien,$_SESSION['id_re']);
             }
             $dang_ky_vacxin = $m_manage_register->read_register_vacxin_id($id);
 

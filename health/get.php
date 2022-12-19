@@ -1,19 +1,6 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "so_suc_khoe_dien_tu");
-if($mysqli->connect_error) {
-  exit('Could not connect');
-}
-
-$sql = "SELECT id, gia_thanh
-FROM vacxin WHERE id = ?";
-
-$stmt = $mysqli->prepare($sql);
-$stmt->bind_param("s", $_GET['q']);
-$stmt->execute();
-$stmt->store_result();
-$stmt->bind_result($id, $gia_thanh);
-$stmt->fetch();
-$stmt->close();
-
-echo $gia_thanh;
+include_once ("models/m_register.php");
+$m_register = new m_register();
+$vacxin = $m_register->read_vacxin_by_id($_GET['q']);
+echo $vacxin->gia_thanh;
 ?>

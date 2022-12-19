@@ -26,6 +26,14 @@
                                 <lable>Ngày đăng ký</lable>
                                 <input class="form-control edit_form" name="ngay_dang_ky" value="<?php echo $dang_ky->ngay_dang_ky; ?>">
                             </div>
+                            <div>
+                                <lable>Trạng thái thanh toán</lable>
+                                <select class="form-select" name="trang_thai_thanh_toan">
+                                <option value="<?php echo $dang_ky->trang_thai_thanh_toan; ?>"><?php if($dang_ky->trang_thai_thanh_toan == 0){ echo "Chưa thanh toán"; } elseif($dang_ky->trang_thai_thanh_toan == 1) {echo "Đã thanh toán";} ?></option>
+                                <option value="0">Chưa thanh toán</option>
+                                <option value="1">Đã thanh toán</option>
+                                </select>
+                            </div>
                             <div style="margin-top: 3%; margin-left: 5%; ">
                                 <button class="btn btn-success" type="submit" name="btnsubmit">Sửa</button> <a class="btn btn-danger" href='manage_register.php'>Quay lại</a>
                             </div>

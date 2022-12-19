@@ -3,6 +3,9 @@
         background-color: #f7b129;
         border-color: #f7b129;
     }
+    .btnChon div {
+        margin-bottom: 0.8%;
+    }
 </style>
 <div class="content-wrapper">
     <div class="container-full">
@@ -85,24 +88,41 @@
                                                     vacxin</button>
                                             </div>
                                             <input type="number" id="index" name="index" style="display: none; ">
-                                            <div id="btnChon">
+                                            <div id="btnChon" class="btnChon">
                                                 <?php
                                                 for ($i = 1; $i <= 3; $i++) :
                                                 ?>
-                                                <div>
+                                                <div style="margin-bottom: 0.8%;">
                                                     <label>Chọn vacxin:</label>
-                                                    <select onchange="upperCase()" class="col-3 form-vacxin" required class="form-select" name="ten_vacxin<?php echo $i; ?>" id="id_vacxin<?php echo $i; ?>">
+                                                    <select onchange="upperCase<?php echo $i ?>()" class="col-3 form-vacxin" class="form-select" name="ten_vacxin<?php echo $i; ?>" id="id_vacxin<?php echo $i; ?>">
                                                         <option value="">--Chọn vacxin--</option>
                                                         <?php foreach ($m_vacxin as $key) { ?><option value="<?php echo $key->id; ?>"><?php echo $key->ten_vacxin; echo '-'.$key->nuoc_san_xuat; ?></option><?php } ?>
                                                     </select>
                                                     <label>Số lượng:</label>
-                                                    <input onchange="upperCase()" class="form-vacxin" type="number" min="0" id="so_luong<?php echo $i; ?>" name="so_luong<?php echo $i; ?>">
+                                                    <input onchange="upperCase<?php echo $i ?>()" class="form-vacxin" type="number" min="0" id="so_luong<?php echo $i; ?>" name="so_luong<?php echo $i; ?>">
                                                     <label>Ngày dự kiến tiêm:</label>
                                                     <input class="form-vacxin" type="date" id="ngay_du_kien_tiem<?php echo $i; ?>" name="ngay_du_kien_tiem<?php echo $i; ?>">
                                                     <label>Giá tiền:</label>
-                                                    <input type="text" name="gia_tien<?php echo $i; ?>" id="demo<?php echo $i ?>">
-                                                   <!-- <span name="gia_tien<?php echo $i; ?>" id="demo<?php echo $i ?>"></span> -->
+                                                    <input style="background-color: #f7b129; border-color: #f7b129;" type="text" name="gia_tien<?php echo $i; ?>" id="demo<?php echo $i ?>">
                                                 </div>
+                                                <script>
+                                                        function upperCase<?php echo $i ?>()
+                                                        {
+                                                            var x = new Array();
+                                                            x[<?php echo $i ?>] = document.getElementById("id_vacxin<?php echo $i ?>").value;
+                                                           
+                                                            var xhttp = new XMLHttpRequest();
+                                                            xhttp.onload = function() {
+                                                                var gia_thanh =new Array();
+                                                                gia_thanh[<?php echo $i ?>] = this.responseText;
+                                                                var y = new Array();
+                                                                y[<?php echo $i ?>] = document.getElementById("so_luong<?php echo $i ?>").value;
+                                                                document.getElementById("demo<?php echo $i ?>").value = y[<?php echo $i ?>] * gia_thanh[<?php echo $i ?>];
+                                                            }
+                                                            xhttp.open("GET", "get.php?q="+ x[<?php echo $i ?>]);
+                                                            xhttp.send(); 
+                                                        }
+                                                    </script>
                                                 <?php endfor; ?>
                                             </div>
                                         </div>
@@ -114,54 +134,37 @@
                                 </div>
                             </form>
 
-                            <script type="text/javascript">
-                                function upperCase() {
-                                        for (var a=1; a<=index; a++) {
-                                            var x = new Array();                                       
-                                            x[a] = document.getElementById("id_vacxin" + a).value;
-                                            var y = new Array();
-                                            y[a] = document.getElementById("so_luong" + a).value;
-
-                                            
-                                            
-                                            // document.getElementById("demo" + a).value = x[a];
-                                            // document.getElementById("demo" + a).innerHTML = z[a];
-                                            // 
-                                            var xhttp = new XMLHttpRequest();
-                                            xhttp.onload = function() {
-                                                var gia_thanh =new Array();
-                                                gia_thanh[a] = this.responseText;
-                                                document.getElementById("demo" + a).value = gia_thanh[a];
-                                            }
-                                            xhttp.open("GET", "get.php?q="+ x[a]);
-                                            xhttp.send(); 
-                                            // document.getElementById("demo" + a).value = x[a];
-
-                                            var z = new Array();
-                                            // document.getElementById("demo" + a).value = x[a];
-
-                                            z[a] = gia_thanh[a].NumberFormat * y[a];
-                                            // document.getElementById("demo" + a).value = x[a];
-                                            }
-                                        }                                  
- 
+                            <script type="text/javascript">                   
                                 var index=3;
                                 function myFunction() {
                                     index+=1;
                                 const element = document.createElement("div");
 
-                                element.innerHTML = '<label>Chọn vacxin:</label> <select onchange="upperCase()" class="col-3 form-vacxin" name="ten_vacxin' + index + '" id="id_vacxin' +
+
+                                element.innerHTML = '<label>Chọn vacxin:</label> <select onchange="upperCase'+ index +'()" class="col-3 form-vacxin" name="ten_vacxin' + index + '" id="id_vacxin' +
                                                     index +
-                                                '" required class="form-select"><option value="">--Chọn vacxin--</option><?php foreach ($m_vacxin as $key) { ?><option value="<?php echo $key->id; ?>"><?php echo $key->ten_vacxin; echo '-'. $key->nuoc_san_xuat; ?></option><?php } ?></select> <label>Số lượng:</label> <input class="form-vacxin" onchange="upperCase()" name="so_luong'+index+'"  id="so_luong' +
+                                                '" required class="form-select"><option value="">--Chọn vacxin--</option><?php foreach ($m_vacxin as $key) { ?><option value="<?php echo $key->id; ?>"><?php echo $key->ten_vacxin; echo '-'. $key->nuoc_san_xuat; ?></option><?php } ?></select> <label>Số lượng:</label> <input class="form-vacxin" onchange="upperCase'+ index +'()" name="so_luong'+index+'"  id="so_luong' +
                                                 index +
-                                                '" type="number" min="0"> <label>Ngày dự kiến tiêm:</label> <input class="form-vacxin" type="date" name="ngay_du_kien_tiem'+ index +'"> Giá tiền:</> <input type="text" name="gia_tien'+index+'" id="demo'+index+'"><br>';
+                                                '" type="number" min="0"> <label>Ngày dự kiến tiêm:</label> <input class="form-vacxin" type="date" name="ngay_du_kien_tiem'+ index +'"> Giá tiền:</> <input style="background-color: #f7b129; border-color: #f7b129;" type="text" name="gia_tien'+index+'" id="demo'+index+'"><br>';  
                                 document.getElementById("btnChon").appendChild(element);
+                                const script = document.createElement("script");
+                                script.innerHTML = 'function upperCase'+ index +'() {\n '+
+                                    'var x = new Array();\n'+
+                                    'x['+ index +'] = document.getElementById("id_vacxin'+ index +'").value;\n'+
+                                    'var xhttp = new XMLHttpRequest();\n'+
+                                    'xhttp.onload = function() {\n'+
+                                    'var gia_thanh =new Array(); gia_thanh['+ index +'] = this.responseText;\n'+
+                                    ' var y = new Array(); y['+ index +'] = document.getElementById("so_luong'+ index +'").value;\n'+
+                                    'document.getElementById("demo'+ index +'").value = y['+ index +'] * gia_thanh['+ index +'];\n'+
+                                    '}\n xhttp.open("GET", "get.php?q="+ x['+ index +']);'+
+                                    'xhttp.send();\n }'; 
+                                document.getElementById("btnChon").appendChild(script);
                                 document.getElementById("index").value = index;
                                 }
                                 document.getElementById("index").value = index;
                                 
 
-
+                                
                             </script>
                         </div>
                     </div>

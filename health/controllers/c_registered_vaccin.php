@@ -17,26 +17,34 @@ class c_registered_vaccin {
                 $_SESSION['so_dien_thoai'] = $so_dien_thoai;
                 $co_so_tiem = $_POST['co_so_tiem'];
                 $_SESSION['co_so_tiem'] = $co_so_tiem;
-                $index = number_format($_POST['index']);
-                $_SESSION['index'] = $index;
+                $in = $_POST['index'];
+                $index = 0;
+                $tong_tien = 0;
 
-                for ($i=1; $i <= $index; $i++) {
-                    $ten_vacxin[$i] = $_POST['ten_vacxin'.$i];
-                    $_SESSION['ten_vacxin'][$i] = $ten_vacxin[$i];
-
-                    $so_luong[$i] = $_POST['so_luong'.$i];
+                for ($i=1; $i <= $in; $i++) {
+                    if(!empty($_POST['ten_vacxin'.$i]) && !empty($_POST['so_luong'.$i]) && !empty($_POST['ngay_du_kien_tiem'.$i]) && !empty($_POST['gia_tien'.$i])){
+                        $index++;
+                        $ten_vacxin[$i] = $_POST['ten_vacxin'.$i];
+                        $_SESSION['ten_vacxin'][$i] = $ten_vacxin[$i];
+                        
+                        $so_luong[$i] = $_POST['so_luong'.$i];
                     $_SESSION['so_luong'][$i] = $so_luong[$i];
 
                     $ngay_du_kien_tiem[$i] = $_POST['ngay_du_kien_tiem'.$i];
                     $_SESSION['ngay_du_kien_tiem'][$i] = $ngay_du_kien_tiem[$i];
 
-                    $gia_tien[$i] = number_format($_POST['gia_tien'.$i]);
+                    $gia_tien[$i] = $_POST['gia_tien'.$i];
                     $_SESSION['gia_tien'][$i] = $gia_tien[$i];
+$tong_tien+=$gia_tien[$i];
+                    }
 
+
+                    
                     // var_dump($gia_tien[1]);
                     // die();
                 }
-
+$_SESSION['tong_tien'] = $tong_tien;
+$_SESSION['index'] = $index;
                 if (empty($error)) {
                         header("Location: /health/confilm_register.php");
                     }
@@ -48,11 +56,56 @@ class c_registered_vaccin {
         include_once ("templates/font-end/layout.php");
     }
 
-    public function confilm_register () {       
+    public function confilm_register () {    
+        $m_register_vaccin = new m_registered_vaccin();
         $view = "views/register_vacxin/v_confilm_register.php";
         include_once ("templates/font-end/layout.php");
     }
 
+
+    public function pay_money () {
+       
+        function getRandomString($n)
+            {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $randomString = '';
+
+            for ($i = 0; $i < $n; $i++) {
+                $index = rand(0, strlen($characters) - 1);
+                $randomString .= $characters[$index];
+            }
+
+            return $randomString;
+            }   
+            
+        $ran = getRandomString(8);
+        $m_register_vaccin = new m_registered_vaccin();
+        // var_dump(123);
+        // die();
+        if(isset($_POST['btnsubmit'])){
+            $ho_ten = $_SESSION['ho_ten'];
+            $so_dien_thoai = $_SESSION['so_dien_thoai'];
+            $co_so_tiem = $_SESSION['co_so_tiem'];
+            $tong_tien = $_SESSION['tong_tien'];
+            $ngay_dang_ky = date("m/d/y", time());    
+            $result = $m_register_vaccin->add_register_vacxin(null,$ran,$ho_ten,$_SESSION['id_user'],$so_dien_thoai,$ngay_dang_ky,$tong_tien,0,1);
+            
+            $id_dang_ky_tiem = $m_register_vaccin->read_id_by_ma_dk($ran)->id;
+
+            for ($i=1; $i <= $_SESSION['index']; $i++) {
+                $ten_vacxin = $_SESSION['ten_vacxin'.$i];
+                $so_luong = $_SESSION['so_luong'.$i];
+                $ngay_du_kien_tiem = $_SESSION['ngay_du_kien_tiem'.$i];
+                $gia_tien = $_SESSION['gia_tien'.$i];
+                $so_luong = $_SESSION['so_luong'.$i];
+                $id_quan_ly_vacxin = $m_register_vaccin->read_qlcs_by_vacxin_cs($ten_vacxin,$co_so_tiem);
+                $result_2 = $m_register_vaccin->add_register_detail(null,$id_dang_ky_tiem,$id_quan_ly_vacxin,$so_luong,$gia_tien,$ngay_du_kien_tiem,1);
+        }
+    }
+        $view = "views/register_vacxin/v_pay_money.php";
+        include_once ("templates/font-end/layout.php");
+        
+    }
 
     public function vacxin () {
         
